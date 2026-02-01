@@ -17,7 +17,7 @@ Instant AI-powered translation for **20+ languages** with stunning **2026 glassm
 ## 🛠️ Tech Stack
 ```
 Frontend: React + Inline CSS (Glassmorphism)
-Backend:  Node.js + Express + TypeScript
+Backend:  Node.js + Express
 AI:       Google Generative AI
 Validation: Zod
 Security:  Helmet + CORS
