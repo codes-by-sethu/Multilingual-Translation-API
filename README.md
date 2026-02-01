@@ -34,7 +34,7 @@ npm/yarn
 
 ### 1. Clone & Install Frontend
 ```bash
-git clone <your-repo>
+git clone (https://github.com/codes-by-sethu/Multilingual-Translation-API)
 cd frontend
 npm install
 npm run dev
