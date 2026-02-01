@@ -1,77 +1,74 @@
-# Multilingual Translation API
+# 🌐 AI Translator - Glassmorphism UI
 
-A Node.js + TypeScript API for real-time multilingual translation using Gemini and LibreTranslate as fallback.
+Instant AI-powered translation for **20+ languages** with stunning **2026 glassmorphism design**.
 
-## Features
+[![React](https://img.shields.io/badge/React-18-blue?style=flat&logo=react)](https://react.dev)
+[![Node.js](https://img.shields.io/badge/Node.js-20-green?style=flat&logo=node.js)](https://nodejs.org)
+[![Glassmorphism](https://img.shields.io/badge/Glassmorphism-2026-purple)](https://css.glass)
 
-1. Single and batch translations
-1. Automatic cache with NodeCache
-1. Persistent storage using MongoDB
-1. Translation statistics & history
+## ✨ Features
+- **20+ Languages**: EN, FR, ES, DE, JP, CN, AR, Hindi + more
+- **Real-time AI Translation** via localhost:3001 API
+- **Liquid Glass™ Effects** - Advanced blur + saturation
+- **Custom Dropdowns** - Perfect z-index layering
+- **Responsive Design** - Desktop + Mobile
+- **SF Pro Typography** - Native macOS feel
 
-## Supported Languages
+## 🛠️ Tech Stack
+```
+Frontend: React + Inline CSS (Glassmorphism)
+Backend:  Node.js + Express + TypeScript
+AI:       Google Generative AI
+DB:       MongoDB (via Mongoose)
+Validation: Zod
+Security:  Helmet + CORS
+```
 
-- English (en)
-- French (fr)
-- Spanish (es)
-- German (de)
-- Italian (it)
-- Portuguese (pt)
-- Russian (ru)
-- Chinese (zh)
-- Japanese (ja)
-- Korean (ko)
-- Arabic (ar)
-- Hindi (hi)
+## 🚀 Quick Start
 
-## Setup
+### Prerequisites
+```bash
+Node.js 18+
+npm/yarn
+```
 
-1. Clone the repository:
-   ```bash
-   git clone <repo-url>
-   cd multilingual-translation-api
-````
+### 1. Clone & Install Frontend
+```bash
+git clone <your-repo>
+cd frontend
+npm install
+npm run dev
+```
 
-2. Install dependencies:
+### 2. Start Backend (separate terminal)
+```bash
+cd backend
+npm install
+cp .env.example .env
+npm run dev
+```
 
-   ```bash
-   npm install
-   ```
+Frontend: `http://localhost:3000`  
+Backend API: `http://localhost:3001/api/translations`
 
-3. Configure environment variables in `.env`:
+## 📁 Project Structure
+```
+├── frontend/          # React Glassmorphism UI
+├── backend/           # Node.js + TypeScript API
+├── .gitignore         # Node + React optimized
+└── README.md
+```
 
-   ```
-   GOOGLE_GEMINI_API_KEY=<your_api_key>
-   MONGODB_URI=<your_mongodb_uri>
-   PORT=3000
-   ```
+## 🤝 Contributing
+1. Fork the repo
+2. Create feature branch (`git checkout -b feature/amazing`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push (`git push origin feature/amazing`)
+5. Open Pull Request
 
-4. Start the server:
+## 📄 License
+[MIT](LICENSE) - Free to use in commercial projects ✨
 
-   ```bash
-   npm run dev
-   ```
+---
 
-## API Endpoints
-
-1. **POST /translate**
-
-   * Request body: `{ text, sourceLang?, targetLang }`
-   * Returns: Translated text and provider info
-
-2. **POST /batch**
-
-   * Request body: `{ translations: [{ text, sourceLang?, targetLang }] }`
-   * Returns: Array of translations with error handling
-
-3. **GET /history**
-
-   * Returns last 50 translations (filter by provider optional)
-
-4. **GET /stats**
-
-   * Returns total translations, cache hit rate, and usage per provider
-
-## License
-
-MIT
+**Built with ❤️ using 2026 Glassmorphism trends**
