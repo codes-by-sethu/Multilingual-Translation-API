@@ -19,7 +19,6 @@ Instant AI-powered translation for **20+ languages** with stunning **2026 glassm
 Frontend: React + Inline CSS (Glassmorphism)
 Backend:  Node.js + Express + TypeScript
 AI:       Google Generative AI
-DB:       MongoDB (via Mongoose)
 Validation: Zod
 Security:  Helmet + CORS
 ```
