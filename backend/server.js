@@ -1,60 +1,51 @@
 const express = require('express');
 const cors = require('cors');
-const fetch = require('node-fetch');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Load API key from .env
+require('dotenv').config();
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
 app.post('/api/translations', async (req, res) => {
     const { text, sourceLang, targetLang } = req.body;
 
     try {
-        // Try MyMemory API first (most reliable FREE)
-        const mymemoryResponse = await fetch(
-            `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${sourceLang}|${targetLang}`
-        );
+        console.log(`📥 Translation request: "${text}" (${sourceLang}→${targetLang})`);
 
-        if (mymemoryResponse.ok) {
-            const data = await mymemoryResponse.json();
-            if (data.responseData && data.responseData.translatedText) {
-                return res.json({ translatedText: data.responseData.translatedText });
-            }
-        }
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-        // Fallback: Simple smart translation simulation
-        const translations = {
-            en: { fr: 'Bonjour', es: 'Hola', de: 'Hallo', it: 'Ciao', pt: 'Olá', ru: 'Привет' },
-            fr: { en: 'Hello', es: 'Hola', de: 'Hallo', it: 'Ciao' },
-            es: { en: 'Hello', fr: 'Bonjour', de: 'Hallo' }
-        };
+        const prompt = `Translate this text from ${sourceLang} to ${targetLang}:\n\n"${text}"\n\nProvide only the translated text, no explanations.`;
 
-        let translated = text;
-        if (translations[sourceLang]?.[targetLang]) {
-            translated = translations[sourceLang][targetLang];
-        } else {
-            // Dynamic fallback - capitalize first letter + add language
-            translated = text.charAt(0).toUpperCase() + text.slice(1) + ` (${targetLang.toUpperCase()})`;
-        }
+        const result = await model.generateContent(prompt);
+        const translatedText = await result.response.text();
 
-        res.json({ translatedText: translated });
+        console.log(`✅ Gemini translated: "${translatedText}"`);
+        res.json({ translatedText: translatedText.trim() });
 
     } catch (error) {
-        console.log('Using fallback translation...');
-
-        // Always return something usable
-        res.json({
-            translatedText: `${text} → ${targetLang.toUpperCase()} (service ready!)`
+        console.error('❌ Gemini error:', error.message);
+        res.status(500).json({
+            error: 'Translation service unavailable',
+            translatedText: `${text} (${targetLang.toUpperCase()})`
         });
     }
 });
 
 app.get('/health', (req, res) => {
-    res.json({ status: 'OK', ready: true });
+    res.json({
+        status: 'OK',
+        ai: 'Google gemini-2.5-flash',
+        ready: true
+    });
 });
 
 app.listen(3001, () => {
     console.log('✅ Backend: http://localhost:3001');
     console.log('🎉 Health check: http://localhost:3001/health');
-    console.log('🌐 Ready for ALL languages!');
+    console.log('🧠 Google Gemini AI Ready! 🚀');
 });
